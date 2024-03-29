@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
+const userModel = require("../models/userModel")
 
 
 router.post("/register", async (request, response) => {
@@ -74,5 +75,6 @@ router.get("/login", async (request, response) => {
     }
 
 })
+
 
 module.exports = { router }
