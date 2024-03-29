@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
-const userModel = require("../models/userModel")
+
 
 
 router.post("/register", async (request, response) => {
@@ -16,8 +16,8 @@ router.post("/register", async (request, response) => {
                 success: false
             })
         }
-
-        //hashing the user password
+        if (request.body.password.length < 8) throw new Error("Password is too short, must me minimum 8 characters")
+        // hashing the user password
         const salt = await bycrypt.genSalt(10)
         const hashedPassword = await bycrypt.hash(request.body.password, salt)
         userDetails.password = hashedPassword
@@ -31,7 +31,7 @@ router.post("/register", async (request, response) => {
     }
     catch (err) {
         response.status(500).send({
-            message: "Somthing wrong unable to add user",
+            message: "Somthing went, wrong unable to add user",
             error: [err.name, err.message]
         })
         console.log(err)
@@ -49,7 +49,7 @@ router.get("/login", async (request, response) => {
                 message: "User not found",
                 success: false
             })
-        
+
         //comparing the hashed password
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
 
