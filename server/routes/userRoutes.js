@@ -33,7 +33,7 @@ router.post("/api/user/register", async (request, response) => {
         })
     }
     catch (err) {
-        response.status(500).send({
+        response.send({
             message: "Somthing went, wrong unable to add user",
             error: [err.name, err.message]
         })
