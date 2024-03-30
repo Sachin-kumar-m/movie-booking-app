@@ -5,18 +5,21 @@ const bycrypt = require("bcrypt")
 
 
 
-router.post("/register", async (request, response) => {
+router.post("/api/user/register", async (request, response) => {
     try {
         const userDetails = request.body
         const userInDB = await Users.findOne({ userEmail: userDetails.userEmail })
         //check if user is in the DB
         if (userInDB) {
-            return response.status(403).send({
-                message: "User already Exists",
+            return response.send({
+                message: "User already Registered",
                 success: false
             })
         }
-        if (request.body.password.length < 8) throw new Error("Password is too short, must me minimum 8 characters")
+        if (request.body.password.length < 8) return response.send({
+            message: "Password should be more than 8 characters",
+            success: false
+        })
         // hashing the user password
         const salt = await bycrypt.genSalt(10)
         const hashedPassword = await bycrypt.hash(request.body.password, salt)
@@ -25,7 +28,7 @@ router.post("/register", async (request, response) => {
         const newUser = new Users(userDetails)
         await newUser.save()
         response.send({
-            message: "User added",
+            message: "User Added Successfully",
             success: true
         })
     }
@@ -39,12 +42,12 @@ router.post("/register", async (request, response) => {
 
 })
 
-router.get("/login", async (request, response) => {
+router.post("/api/user/login", async (request, response) => {
     try {
         const userDetails = request.body
         const userFromDB = await Users.findOne({ userEmail: request.body.userEmail })
-
-        if (userFromDB === null) return response.status(404).send(
+        //check if user is in DB
+        if (!userFromDB) return response.send(
             {
                 message: "User not found",
                 success: false
@@ -54,15 +57,15 @@ router.get("/login", async (request, response) => {
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
 
         // compare the email and password
-        if (userDetails.userEmail === userFromDB.userEmail && isCorrectPassword) {
+        if (isCorrectPassword) {
             response.send({
                 message: "Login successfull",
                 success: true
             })
         }
         else {
-            response.status(401).send({
-                message: "Not authorized",
+            response.send({
+                message: "Invalid Credentials",
                 success: false
             })
         }

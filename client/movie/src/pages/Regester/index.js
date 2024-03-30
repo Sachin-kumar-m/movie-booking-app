@@ -1,10 +1,30 @@
 
-import { Form } from "antd";
+import { Form, message } from "antd";
 import { Link } from "react-router-dom";
 import Button from "../../components/button";
+import { registerUser } from "../../apis";
 
 
 function Register() {
+
+    const onFinish = async (values) => {
+        try {
+            const response = await registerUser(values)
+            if (response.success) {
+                message.success(response.message)
+                console.log(response.message);
+            }
+            else {
+                message.error(response.message)
+                console.log(response.message)
+            }
+        }
+        catch (error) {
+            const errorMessage = error.message
+            message.error(errorMessage)
+            console.log(errorMessage)
+        }
+    }
 
     return (
         <div className="flex justify-center h-screen items-center bg-primary">
@@ -13,17 +33,17 @@ function Register() {
                     Book Movies Online {" "}
                 </h1>
                 <hr />
-                <Form layout="vertical" className="mt-1">
+                <Form layout="vertical" className="mt-1" onFinish={onFinish}>
                     <Form.Item
                         label="Name"
-                        name="name"
+                        name="userName"
                         rules={[{ required: true, message: "Please input your name!" }]}
                     >
                         <input type="text" placeholder="Name" style={{ borderRadius: "10px" }} />
                     </Form.Item>
                     <Form.Item
                         label="Email"
-                        name="email"
+                        name="userEmail"
                         rules={[{ required: true, message: "Please input your email!" }]}
                     >
                         <input type="email" placeholder="Email" style={{ borderRadius: "10px", paddingLeft: "5px" }} />
