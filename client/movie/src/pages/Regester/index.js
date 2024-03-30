@@ -3,16 +3,18 @@ import { Form, message } from "antd";
 import { Link } from "react-router-dom";
 import Button from "../../components/button";
 import { registerUser } from "../../apis";
-
+import { useNavigate } from "react-router-dom";
 
 function Register() {
-
+    const navigate = useNavigate()
     const onFinish = async (values) => {
         try {
             const response = await registerUser(values)
             if (response.success) {
                 message.success(response.message)
                 console.log(response.message);
+                navigate("/login")
+                window.location.reload(false)
             }
             else {
                 message.error(response.message)
@@ -30,7 +32,7 @@ function Register() {
         <div className="flex justify-center h-screen items-center bg-primary">
             <div className="card p-3 w-400" style={{ background: "#9290C3", borderRadius:"50px" }} >
                 <h1 className="text-xl mb-1 flex justify-center">
-                    Book Movies Online {" "}
+                    Book Movies Online Register User {" "}
                 </h1>
                 <hr />
                 <Form layout="vertical" className="mt-1" onFinish={onFinish}>

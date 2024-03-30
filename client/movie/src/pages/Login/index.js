@@ -3,18 +3,22 @@ import { Form, message } from "antd";
 import { Link } from "react-router-dom";
 import Button from "../../components/button";
 import { loginUser } from "../../apis";
-
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-
+    const navigate = useNavigate()
     const onFinish = async(values) => {
         try {
             const response = await loginUser(values)
             if (response.success) {
                 message.success(response.message)
                 console.log(response.message)
+                navigate("/")
             }
             else {
+                if (response.message === "User not found") {
+                    navigate("/register")
+                }
                 message.error(response.message)
                 console.log(response.message)
             }
