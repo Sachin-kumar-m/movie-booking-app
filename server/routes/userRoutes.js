@@ -39,12 +39,12 @@ router.post("/register", async (request, response) => {
 
 })
 
-router.get("/login", async (request, response) => {
+router.post("/login", async (request, response) => {
     try {
         const userDetails = request.body
         const userFromDB = await Users.findOne({ userEmail: request.body.userEmail })
-
-        if (userFromDB === null) return response.status(404).send(
+        //check if user is in DB
+        if (!userFromDB) return response.status(404).send(
             {
                 message: "User not found",
                 success: false
@@ -54,7 +54,7 @@ router.get("/login", async (request, response) => {
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
 
         // compare the email and password
-        if (userDetails.userEmail === userFromDB.userEmail && isCorrectPassword) {
+        if (isCorrectPassword) {
             response.send({
                 message: "Login successfull",
                 success: true
@@ -62,7 +62,7 @@ router.get("/login", async (request, response) => {
         }
         else {
             response.status(401).send({
-                message: "Not authorized",
+                message: "Invalid Credentials",
                 success: false
             })
         }
