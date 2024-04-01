@@ -79,5 +79,16 @@ router.post("/api/user/login", async (request, response) => {
 
 })
 
+// endpoint to get all Users
+// router.get("/api/users/users", async(_, response) => {
+//     try {
+//         const allUsers = await Users.find()
+//         response.send(allUsers)
+//     }
+//     catch (err) {
+//         console.log(err)
+//         response.end(err)
+//    }
+// })
 
 module.exports = { router }
