@@ -12,12 +12,13 @@ function Login() {
             const response = await loginUser(values)
             if (response.success) {
                 message.success(response.message)
-                console.log(response.message)
+                console.log(response)
+                localStorage.setItem("bmoSession",JSON.stringify(response.data))
                 navigate("/")
             }
             else {
                 if (response.message === "User not found") {
-                    navigate("/register")
+                    setTimeout(()=>navigate("/register"),2000)
                 }
                 message.error(response.message)
                 console.log(response.message)
