@@ -18,7 +18,7 @@ function Login() {
             }
             else {
                 if (response.message === "User not found") {
-                    setTimeout(()=>navigate("/register"),2000)
+                    setTimeout(()=>navigate("/register"),1500)
                 }
                 message.error(response.message)
                 console.log(response.message)
