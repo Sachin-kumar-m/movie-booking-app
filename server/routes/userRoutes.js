@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 
 
@@ -43,15 +44,19 @@ router.post("/api/user/register", async (request, response) => {
 })
 
 router.post("/api/user/login", async (request, response) => {
+
     try {
         const userDetails = request.body
         const userFromDB = await Users.findOne({ userEmail: request.body.userEmail })
+
         //check if user is in DB
         if (!userFromDB) return response.send(
             {
                 message: "User not found",
                 success: false
             })
+        //generating web tokens for authentication
+        const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "2m" })
 
         //comparing the hashed password
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
@@ -60,7 +65,8 @@ router.post("/api/user/login", async (request, response) => {
         if (isCorrectPassword) {
             response.send({
                 message: "Login successfull",
-                success: true
+                success: true,
+                data: tocken
             })
         }
         else {
@@ -71,6 +77,7 @@ router.post("/api/user/login", async (request, response) => {
         }
     }
     catch (err) {
+        console.log(err);
         response.send({
             message: "Something went wrong",
             error: [err.name, err.message]
@@ -78,6 +85,7 @@ router.post("/api/user/login", async (request, response) => {
     }
 
 })
+
 
 // endpoint to get all Users
 // router.get("/api/users/users", async(_, response) => {
