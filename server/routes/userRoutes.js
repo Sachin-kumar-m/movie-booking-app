@@ -55,7 +55,7 @@ router.post("/api/user/login", async (request, response) => {
                 message: "User not found",
                 success: false
             })
-        //generating web tokens for authentication
+        //generating web tokens for authentication using JWT
         const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "2m" })
 
         //comparing the hashed password
