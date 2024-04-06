@@ -10,7 +10,6 @@ function Register() {
     const onFinish = async (values) => {
         try {
             const response = await registerUser(values)
-            console.log(response.success);
             if (response.success) {
                 message.success(response.message)
                 console.log(response.message);
