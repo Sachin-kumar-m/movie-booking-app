@@ -5,6 +5,7 @@ export const axiosInstance = axios.create({
     headers: {
         withCredentials: true,
         method: "post",
-        "Content-typy" : "application/json"
+        "Content-type": "application/json",
+        Authorization:`Bearer ${localStorage.getItem("token")}`
     }
 })
