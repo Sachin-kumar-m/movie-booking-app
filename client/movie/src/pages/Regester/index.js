@@ -14,7 +14,6 @@ function Register() {
                 message.success(response.message)
                 console.log(response.message);
                 setTimeout(()=>navigate("/login"),2000)
-                window.location.reload(false)
             }
             else if (response.message === "User already Registered") {
                 message.error(response.message)
