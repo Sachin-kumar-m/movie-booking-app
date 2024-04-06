@@ -10,11 +10,11 @@ function Register() {
     const onFinish = async (values) => {
         try {
             const response = await registerUser(values)
+            console.log(response.success);
             if (response.success) {
                 message.success(response.message)
                 console.log(response.message);
                 setTimeout(()=>navigate("/login"),2000)
-                window.location.reload(false)
             }
             else if (response.message === "User already Registered") {
                 message.error(response.message)
