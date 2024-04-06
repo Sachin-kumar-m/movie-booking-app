@@ -3,6 +3,7 @@ const router = express.Router()
 const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const authmiddleware = require("../middleware/authmiddleware")
 
 
 
@@ -55,8 +56,8 @@ router.post("/api/user/login", async (request, response) => {
                 message: "User not found",
                 success: false
             })
-        //generating web tokens for authentication using JWT
-        const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "2m" })
+        //generating web tokens for authentication using JWT, params for sign:payload, secret key and options
+        const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "2d" })
 
         //comparing the hashed password
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
@@ -84,6 +85,25 @@ router.post("/api/user/login", async (request, response) => {
         })
     }
 
+})
+
+router.get("/api/users/isAuthoriseduser", authmiddleware, async(request, response) => {
+    try {
+        const user = await Users.findById(request.body.userID).select("-password")
+        response.send({
+            success: true,
+            message: "User details fetch Successfully",
+            data: user
+        })
+        
+    }
+
+    catch (err) {
+        response.status(400).send({
+            success: true,
+            message:err.message
+        })
+    }
 })
 
 
