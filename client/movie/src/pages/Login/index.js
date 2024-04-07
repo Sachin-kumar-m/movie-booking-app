@@ -50,7 +50,7 @@ function Login() {
                         name="password"
                         rules={[{ required: true, message: "Please input your password!" }]}
                     >
-                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} />
+                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} autocomplete="off" />
                     </Form.Item>
 
 
