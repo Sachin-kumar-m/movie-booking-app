@@ -57,7 +57,7 @@ router.post("/api/user/login", async (request, response) => {
                 success: false
             })
         //generating web tokens for authentication using JWT, params for sign:payload, secret key and options
-        const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "2d" })
+        const tocken = jwt.sign({ userID: userFromDB._id, userEmail: userFromDB.userEmail }, process.env.jwt_secret_key, { expiresIn: "1h" })
 
         //comparing the hashed password
         const isCorrectPassword = await bycrypt.compare(userDetails.password, userFromDB.password)
