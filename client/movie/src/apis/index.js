@@ -19,3 +19,15 @@ export const loginUser = async (payload) => {
         console.log(err)
     }
 }
+
+export const getLoginUser = async() => {
+    try {
+        const response = await axiosInstance.get("api/user/is-authorised-user", {
+            headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}
+        })
+        return response.data
+    }
+    catch (err) {
+        console.log(err)
+    }
+}

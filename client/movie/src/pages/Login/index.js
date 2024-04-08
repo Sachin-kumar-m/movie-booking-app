@@ -9,10 +9,9 @@ function Login() {
     const navigate = useNavigate()
     const onFinish = async(values) => {
         try {
-            const response = await loginUser(values)
+            const response = await loginUser(values)//hitting the login api
             if (response.success) {
                 message.success(response.message)
-                console.log(response)
                 localStorage.setItem("token",(response.data))
                 navigate("/")
             }
@@ -50,7 +49,7 @@ function Login() {
                         name="password"
                         rules={[{ required: true, message: "Please input your password!" }]}
                     >
-                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} autocomplete="off" />
+                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} autoComplete="off" />
                     </Form.Item>
 
 
