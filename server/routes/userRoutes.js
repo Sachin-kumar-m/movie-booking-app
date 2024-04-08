@@ -4,6 +4,7 @@ const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const authmiddleware = require("../middleware/authmiddleware")
+const { use } = require("bcrypt/promises")
 
 
 
@@ -87,7 +88,7 @@ router.post("/api/user/login", async (request, response) => {
 
 })
 
-router.get("/api/users/isAuthoriseduser", authmiddleware, async(request, response) => {
+router.get("/api/user/is-authorised-user", authmiddleware, async(request, response) => {
     try {
         const user = await Users.findById(request.body.userID).select("-password")
         response.send({
@@ -95,7 +96,6 @@ router.get("/api/users/isAuthoriseduser", authmiddleware, async(request, respons
             message: "User details fetch Successfully",
             data: user
         })
-        
     }
 
     catch (err) {
