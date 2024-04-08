@@ -60,7 +60,7 @@ function Register() {
                         name="password"
                         rules={[{ required: true, message: "Please input your password!" }]}
                     >
-                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} autocomplete="off" />
+                        <input type="password" placeholder="Password" style={{ borderRadius: "10px", paddingLeft: "5px" }} autoComplete="off" />
                     </Form.Item>
 
 
