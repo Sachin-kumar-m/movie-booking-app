@@ -4,7 +4,6 @@ const Users = require("../models/userModel")
 const bycrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const authmiddleware = require("../middleware/authmiddleware")
-const { use } = require("bcrypt/promises")
 
 
 
