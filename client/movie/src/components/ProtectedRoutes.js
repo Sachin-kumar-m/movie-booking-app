@@ -14,7 +14,7 @@ function ProtectedRoute({ children }) {
     const { user } = useSelector((state) => state.users);//getting this from redux store
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const shortName = user?.userName?.split(".")
+    const shortName = user?.userName?.split(/[ .]+/)
     const getpresentUser = async () => {
         try {
             dispatch(showLoading());
