@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Tooltip } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ function ProtectedRoute({ children }) {
     const { user } = useSelector((state) => state.users);//getting this from redux store
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const shortName = user?.userName?.split(".")
     const getpresentUser = async () => {
         try {
             dispatch(showLoading());
@@ -42,7 +42,7 @@ function ProtectedRoute({ children }) {
     };
 
     useEffect(() => {
-       
+
         if (localStorage.getItem("token")) {
             getpresentUser(); // Get User Info from server
         } else {
@@ -61,30 +61,32 @@ function ProtectedRoute({ children }) {
                             onClick={() => navigate("/")}
                         >Book Movies Online {user.isAdmin ? "(Admin)" : ""}</h1>
                     </div>
+                    <Tooltip placement="bottom" title={user.userName} color={"#9290c3"} mouseEnterDelay={1}>
+                        <div className="bg-white p-1 flex gap-1" style={{ display: "flex", borderRadius: "50%", justifyContent: "center", alignItems: "center" }}>
+                            <i className="ri-shield-user-line text-primary mt-1"></i>
 
-                    <div className="bg-white p-1 flex gap-1">
-                        <i className="ri-shield-user-line text-primary mt-1"></i>
-                        <h1
-                            className="text-sm underline"
-                            onClick={() => {
-                                if (user.isAdmin) {
-                                    navigate("/admin");
-                                } else {
-                                    navigate("/profile");
-                                }
-                            }}
-                        >
-                            {user.userName}
-                        </h1>
+                            <h1
+                                className="text-sm underline"
+                                onClick={() => {
+                                    if (user.isAdmin) {
+                                        navigate("/admin");
+                                    } else {
+                                        navigate("/profile");
+                                    }
+                                }}
+                            >
+                                {(shortName[0]?.slice(0, 1) + shortName[1]?.slice(0, 1))?.toUpperCase()}
+                            </h1>
 
-                        <i
-                            className="ri-logout-box-r-line mt-1"
-                            onClick={() => {
-                                localStorage.removeItem("token");
-                                navigate("/login");
-                            }}
-                        ></i>
-                    </div>
+                            <i
+                                className="ri-logout-box-r-line mt-1"
+                                onClick={() => {
+                                    localStorage.removeItem("token");
+                                    navigate("/login");
+                                }}
+                            ></i>
+                        </div>
+                    </Tooltip>
                 </div>
                 <div className="content mt-1 p-1">{children}</div>
             </div>
