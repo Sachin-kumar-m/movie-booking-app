@@ -109,7 +109,7 @@ router.get("/api/user/is-authorised-user", authmiddleware, async(request, respon
 // endpoint to get all Users
 // router.get("/api/users/users", async(_, response) => {
 //     try {
-//         const allUsers = await Users.find()
+//         const allUsers = await Users.find().select("-password")
 //         response.send(allUsers)
 //     }
 //     catch (err) {
