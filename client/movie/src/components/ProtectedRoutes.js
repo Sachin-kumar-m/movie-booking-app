@@ -1,7 +1,9 @@
-import { message, Tooltip } from "antd";
+import { message, Tooltip, Avatar, Dropdown } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { AppstoreTwoTone, LogoutOutlined } from "@ant-design/icons"
 
 // API
 import { getLoginUser } from "../apis/index"
@@ -51,42 +53,49 @@ function ProtectedRoute({ children }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const items = [
+        {// eslint-disable-next-line
+            label: <a onClick={() => {
+                if (user.isAdmin) {
+                    navigate("/admin");
+                } else {
+                    navigate("/profile");
+                }
+            }}>Profile</a>,
+            key: '1',
+            icon: <AppstoreTwoTone twoToneColor="#424769" />,
+        },
+        {// eslint-disable-next-line
+            label: <a onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/login");
+            }}>Logout</a>,
+            key: '2',
+            icon: <LogoutOutlined />,
+        }]
+
+
     return (
         user &&
         (
             <div className="layout p-1">
-                <div className="header bg-primary flex justify-between p-2">
+                <div className="header bg-primary flex justify-between p-2" style={{ display: "flex", alignItems: "center" }}>
                     <div>
                         <h1 className="text-2xl text-white cursor-pointer"
                             onClick={() => navigate("/")}
                         >Book Movies Online {user.isAdmin ? "(Admin)" : ""}</h1>
                     </div>
-                    <Tooltip placement="bottom" title={user.userName} color={"#9290c3"} mouseEnterDelay={1}>
-                        <div className="bg-white p-1 flex gap-1" style={{ display: "flex", borderRadius: "50%", justifyContent: "center", alignItems: "center" }}>
-                            <i className="ri-shield-user-line text-primary mt-1"></i>
 
-                            <h1
-                                className="text-sm underline"
-                                onClick={() => {
-                                    if (user.isAdmin) {
-                                        navigate("/admin");
-                                    } else {
-                                        navigate("/profile");
-                                    }
-                                }}
-                            >
-                                {(shortName[0]?.slice(0, 1) + shortName[1]?.slice(0, 1))?.toUpperCase()}
-                            </h1>
+                    <div className="p-1 flex gap-1" style={{ display: "flex", borderRadius: "50%", justifyContent: "center", alignItems: "center" }}>
+                        <h1 className="text-sm underline">
+                            <Dropdown menu={{ items }} placement="bottom" trigger={"click"}>
+                                <Tooltip placement="top" title={user.userName} color={"#9290c3"} mouseEnterDelay={1}>
+                                    <Avatar size={44} icon={(shortName[0]?.slice(0, 1) + shortName[1]?.slice(0, 1))?.toUpperCase()} style={{ fontSize: "15px", backgroundColor: "#9290c3" }} />
+                                </Tooltip>
+                            </Dropdown>
+                        </h1>
+                    </div>
 
-                            <i
-                                className="ri-logout-box-r-line mt-1"
-                                onClick={() => {
-                                    localStorage.removeItem("token");
-                                    navigate("/login");
-                                }}
-                            ></i>
-                        </div>
-                    </Tooltip>
                 </div>
                 <div className="content mt-1 p-1">{children}</div>
             </div>
