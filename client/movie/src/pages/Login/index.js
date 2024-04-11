@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../../components/button";
 import { loginUser } from "../../apis";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Login() {
     const navigate = useNavigate()
@@ -28,7 +29,12 @@ function Login() {
             console.log(error);
         }
     }
-
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/")
+        }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
     return (
         <div className="flex justify-center h-screen items-center bg-primary">
             <div className="card p-3 w-400" style={{ background: "#9290C3", borderRadius:"50px" }} >
