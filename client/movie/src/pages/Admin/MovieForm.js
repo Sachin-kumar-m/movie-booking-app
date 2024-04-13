@@ -48,7 +48,7 @@ function MovieForm({
                     message.success(response.message)
                     setShowMovieFormModal(false)
                     getMoviesapi()
-                    dispatch(hideLoading())
+                    
                 }
                 else {
                     message.error(response.message)
