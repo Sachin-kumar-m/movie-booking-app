@@ -33,3 +33,6 @@ select, #release_date{
 .ant-table-row td:nth-child(3){
     text-align: justify;
 }
+.ant-table-row td:nth-child(4){
+    text-align: center;
+}
