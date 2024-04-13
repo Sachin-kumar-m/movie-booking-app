@@ -125,6 +125,7 @@ function MovieList() {
     ];
     useEffect(() => {
         getMoviesapi()
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -149,6 +150,7 @@ function MovieList() {
                     selectedMovie={selectedMovie}
                     setSelectedMovie={setSelectedMovie}
                     formType={formType}
+                    getMoviesapi = {getMoviesapi}
                 />
             )}
         </div>

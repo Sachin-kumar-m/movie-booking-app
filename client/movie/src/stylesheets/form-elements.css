@@ -16,3 +16,11 @@ textarea{
 .ant-form-item{
     margin-bottom: 10px;
 }
+
+.ant-modal-body input, textarea{
+    border-radius: 10px;
+}
+
+select, #release_date{
+    cursor: pointer;
+}

@@ -44,11 +44,30 @@ export const getMovies = async () => {
 }
 
 export const deleteMovies = async (payload) => {
-    console.log("payload=>",payload);
     try {
         const response = await movieInstance.delete("/api/movies/delete", {
             data: payload //have to do this if not the payload will not be sent to backend, this is very specfic to delete route
         })
+        return response.data
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+export const addMovies = async (payload) => {
+    try {
+        const response = await movieInstance.post("/api/movies/add", payload)
+        return response.data
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+export const updateMovies = async (payload) => {
+    try {
+        const response = await movieInstance.put("/api/movies/edit", payload)
         return response.data
     }
     catch (err) {

@@ -46,17 +46,18 @@ router.post("/api/movies/add", async (request, response) => {
 })
 
 
-router.put("api/movies/edit", async (request, response) => {
+router.put("/api/movies/edit", async (request, response) => {
     try {
         const patchMovie = request.body
-        const movie = await Movies.findOne({ _id: patchMovie._id })
-        Movies.update({ title: movie.title }, patchMovie)
+        const movie = await Movies.findById(patchMovie._id)
+        await Movies.findOneAndUpdate({ _id: movie._id }, patchMovie)
         response.send({
             success: true,
             message:"Saved Successfully"
         })
     }
     catch (err) {
+        console.log(err);
         response.send({
             success: false,
             message:"Unable Edit, something went wrong"
