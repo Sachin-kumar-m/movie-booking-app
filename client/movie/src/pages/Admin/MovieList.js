@@ -85,7 +85,7 @@ function MovieList() {
             dataIndex: "description",
         },
         {
-            title: "Duration",
+            title: "Duration (in Mins)",
             dataIndex: "duration",
         },
         {
