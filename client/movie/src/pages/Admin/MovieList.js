@@ -82,10 +82,10 @@ function MovieList() {
 
         {
             title: "Description",
-            dataIndex: "description"
+            dataIndex: "description",
         },
         {
-            title: "Duration",
+            title: "Duration (in Mins)",
             dataIndex: "duration",
         },
         {
@@ -110,7 +110,7 @@ function MovieList() {
                 return (
                     <div className="flex gap-1">
                         <i
-                            className="ri-delete-bin-line" style={{ cursor: "pointer" }}
+                            className="ri-delete-bin-2-line" style={{ cursor: "pointer" }}
                             onClick={() => {
                                 setOpen(true)
                                 // deleteMovieAPI(record)
@@ -118,7 +118,7 @@ function MovieList() {
                             }}
                         ></i>
                         <i
-                            className="ri-pencil-line" style={{ cursor: "pointer" }}
+                            className="ri-edit-2-line" style={{ cursor: "pointer"}}
                             onClick={() => {
                                 setSelectedMovie(record);
                                 setFormType("edit");

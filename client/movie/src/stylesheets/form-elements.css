@@ -29,3 +29,10 @@ textarea{
 select, #release_date{
     cursor: pointer;
 }
+
+.ant-table-row td:nth-child(3){
+    text-align: justify;
+}
+.ant-table-row td:nth-child(4){
+    text-align: center;
+}
