@@ -19,6 +19,11 @@ textarea{
 
 .ant-modal-body input, textarea{
     border-radius: 10px;
+    padding-left: 10px;
+}
+
+.ant-modal-body textarea{
+    padding-top: 10px;
 }
 
 select, #release_date{

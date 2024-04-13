@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
 
 import { deleteMovies, getMovies } from "../../apis";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 
 function MovieList() {
@@ -16,7 +17,8 @@ function MovieList() {
     const [formType, setFormType] = useState("add");
     const dispatch = useDispatch();
 
-
+    const [open, setOpen] = useState(false)
+    const [deleteMovieState, setMovieState] = useState(null) 
     const getMoviesapi = async () => {
         try {
             dispatch(showLoading())
@@ -52,7 +54,10 @@ function MovieList() {
             message.error(err)
         }
     }
-
+    const handleOk = () => {
+        deleteMovieAPI(deleteMovieState)
+        setOpen(false)
+    }
     //defining our columns of our table using the antdesign template
     const columns = [
         {
@@ -77,7 +82,7 @@ function MovieList() {
 
         {
             title: "Description",
-            dataIndex: "description",
+            dataIndex: "description"
         },
         {
             title: "Duration",
@@ -107,7 +112,9 @@ function MovieList() {
                         <i
                             className="ri-delete-bin-line" style={{ cursor: "pointer" }}
                             onClick={() => {
-                                deleteMovieAPI(record)
+                                setOpen(true)
+                                // deleteMovieAPI(record)
+                                setMovieState(record)
                             }}
                         ></i>
                         <i
@@ -127,7 +134,7 @@ function MovieList() {
         getMoviesapi()
         // eslint-disable-next-line
     }, [])
-
+    
     return (
         <div>
             <div className="flex justify-end mb-1">
@@ -153,6 +160,8 @@ function MovieList() {
                     getMoviesapi = {getMoviesapi}
                 />
             )}
+    
+            {open&& <ConfirmationModal handleOk={handleOk} open={open} setOpen={setOpen}/>}
         </div>
     );
 }
