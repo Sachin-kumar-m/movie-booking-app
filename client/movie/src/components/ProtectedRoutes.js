@@ -1,9 +1,9 @@
-import { message, Tooltip, Avatar, Dropdown } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppstoreTwoTone, LogoutOutlined } from "@ant-design/icons"
+import { message, Tooltip, Avatar, Dropdown } from "antd";
+import { AppstoreTwoTone, LogoutOutlined, HomeOutlined } from "@ant-design/icons"
 
 // API
 import { getLoginUser } from "../apis/index"
@@ -53,6 +53,7 @@ function ProtectedRoute({ children }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    //dropdown items on the profile iconn
     const items = [
         {// eslint-disable-next-line
             label: <a onClick={() => {
@@ -81,15 +82,16 @@ function ProtectedRoute({ children }) {
             <div className="layout p-1">
                 <div className="header bg-primary flex justify-between p-2" style={{ display: "flex", alignItems: "center" }}>
                     <div>
+                    
                         <h1 className="text-2xl text-white cursor-pointer"
                             onClick={() => navigate("/")}
-                        >Book Movies Online {user.isAdmin ? "(Admin)" : ""}</h1>
+                        ><HomeOutlined /> Book Movies Online {user.isAdmin ? "(Admin)" : ""}</h1>
                     </div>
 
                     <div className="p-1 flex gap-1" style={{ display: "flex", borderRadius: "50%", justifyContent: "center", alignItems: "center" }}>
                         <h1 className="text-sm underline">
                             <Dropdown menu={{ items }} placement="bottom" trigger={"click"}>
-                                <Tooltip placement="top" title={user.userName} color={"#9290c3"} mouseEnterDelay={1}>
+                                <Tooltip placement="bottom" title={user.userName} color={"#9290c3"} mouseEnterDelay={2}>
                                     <Avatar size={44} icon={(shortName[0]?.slice(0, 1) + shortName[1]?.slice(0, 1))?.toUpperCase()} style={{ fontSize: "15px", backgroundColor: "#9290c3" }} />
                                 </Tooltip>
                             </Dropdown>
