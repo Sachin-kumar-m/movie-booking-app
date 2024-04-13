@@ -34,7 +34,8 @@ function MovieForm({
                 if (response.success) {
                     message.success(response.message)
                     setShowMovieFormModal(false)
-                    getMoviesapi()
+                    setTimeout( getMoviesapi,1000)
+                   
                 }
                 else {
                     message.error(response.message)
@@ -47,7 +48,7 @@ function MovieForm({
                 if (response.success) {
                     message.success(response.message)
                     setShowMovieFormModal(false)
-                    getMoviesapi()
+                    setTimeout( getMoviesapi,1000)
                     
                 }
                 else {

@@ -62,7 +62,7 @@ function ProtectedRoute({ children }) {
                 } else {
                     navigate("/profile");
                 }
-            }}>Profile</a>,
+            }}>{user.isAdmin?"Admin":"Profile"}</a>,
             key: '1',
             icon: <AppstoreTwoTone twoToneColor="#424769" />,
         },
