@@ -46,7 +46,7 @@ router.post("/api/movies/add", async (request, response) => {
 })
 
 
-router.patch("/api/movies/edit", async (request, response) => {
+router.put("/api/movies/edit", async (request, response) => {
     try {
         const patchMovie = request.body
         const movie = await Movies.findById(patchMovie._id)
