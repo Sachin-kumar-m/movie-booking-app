@@ -10,8 +10,11 @@ app.use(express.json())
 //importing dbconfig file
 const dbConfig = require("./config/dbconfig")
 const routes = require("./routes/userRoutes")
+const movies = require("./routes/movieRoutes")
 
-app.use("/",routes.router)
+app.use("/", routes.router)
+app.use("/", movies.router)
+
 
 const port = 8080
 const host = "http://localhost"

@@ -106,3 +106,7 @@
       transform: rotate(360deg);
     }
   }
+
+  .ant-dropdown-menu-item:hover{
+    background-color: #9290C3 !important;
+  }

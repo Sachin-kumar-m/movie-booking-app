@@ -5,6 +5,8 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Register from './pages/Regester';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Admin from './pages/Admin';
 
 //style sheets
 import "./stylesheets/alignments.css";
@@ -29,6 +31,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           </Routes>
