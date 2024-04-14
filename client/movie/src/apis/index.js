@@ -33,6 +33,16 @@ export const getLoginUser = async() => {
     }
 }
 
+export const updateUser = async (payload) => {
+    try {
+        const response = await axiosInstance.put("/api/user/update", payload)
+        return response.data
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
 export const getMovies = async () => {
     try {
         const response = await movieInstance.get("api/movies/getmovies")
