@@ -36,3 +36,11 @@ select, #release_date{
 .ant-table-row td:nth-child(4){
     text-align: center;
 }
+#duration{
+    width: 50%;
+}
+
+#language, #gener{
+    border-radius: 10px;
+    padding-left:10px ;
+}
