@@ -63,12 +63,6 @@ function Profile() {
         <Form.Item
           name="new_password"
           label="New Password"
-          rules={[
-            {
-              required: true,
-              
-            },
-          ]}
         >
           <Input />
         </Form.Item>
