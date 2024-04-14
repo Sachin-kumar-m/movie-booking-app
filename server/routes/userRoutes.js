@@ -87,7 +87,7 @@ router.post("/api/user/login", async (request, response) => {
 
 })
 
-router.get("/api/user/is-authorised-user", authmiddleware, async(request, response) => {
+router.get("/api/user/is-authorised-user", authmiddleware, async (request, response) => {
     try {
         const user = await Users.findById(request.body.userID).select("-password")
         response.send({
@@ -100,7 +100,7 @@ router.get("/api/user/is-authorised-user", authmiddleware, async(request, respon
     catch (err) {
         response.status(400).send({
             success: true,
-            message:err.message
+            message: err.message
         })
     }
 })
@@ -113,31 +113,40 @@ router.put("/api/user/update", async (request, response) => {
         const isCorrectPassword = await bycrypt.compare(user.password, userInDB.password)
         if (isCorrectPassword) {
             const salt = await bycrypt.genSalt(10)
-            const hashedPassword = await bycrypt.hash(user.new_password, salt)
-            user.password = hashedPassword
-            delete user.new_password
-            delete user.ID
+            if (user.new_password) {
+                const hashedPassword = await bycrypt.hash(user.new_password, salt)
+                user.password = hashedPassword
+                delete user.new_password
+                delete user.ID
+                await Users.findByIdAndUpdate({ _id: userInDB._id }, user)
+            }
+            else {
+                delete user.new_password
+                delete user.ID
+                delete user.password
+                await Users.findByIdAndUpdate({ _id: userInDB._id }, user)
+            }
             await Users.findByIdAndUpdate({ _id: userInDB._id }, user)
-            const newDetails = await Users.findOne({_id:user._id}).select("-password")
+            const newDetails = await Users.findOne({ _id: user._id }).select("-password")
             return response.send({
                 success: true,
-                message: "Profile Updated Successfully",
-                data:newDetails
+                message: "Profile Updated Successfully, Please login Again",
+                data: newDetails
             })
-            
+
         }
         response.send({
             success: false,
-            message:"Wrong Password"
+            message: "Wrong Password"
         })
     }
     catch (err) {
         console.log(err);
         response.send({
             success: false,
-            message:err.message
+            message: err.message
         })
-   }
+    }
 })
 
 // endpoint to get all Users
