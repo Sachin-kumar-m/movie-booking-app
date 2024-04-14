@@ -106,6 +106,40 @@ router.get("/api/user/is-authorised-user", authmiddleware, async(request, respon
 })
 
 
+router.put("/api/user/update", async (request, response) => {
+    try {
+        const user = request.body
+        const userInDB = await Users.findOne({ _id: user.ID })
+        const isCorrectPassword = await bycrypt.compare(user.password, userInDB.password)
+        if (isCorrectPassword) {
+            const salt = await bycrypt.genSalt(10)
+            const hashedPassword = await bycrypt.hash(user.new_password, salt)
+            user.password = hashedPassword
+            delete user.new_password
+            delete user.ID
+            await Users.findByIdAndUpdate({ _id: userInDB._id }, user)
+            const newDetails = await Users.findOne({_id:user._id}).select("-password")
+            return response.send({
+                success: true,
+                message: "Profile Updated Successfully",
+                data:newDetails
+            })
+            
+        }
+        response.send({
+            success: false,
+            message:"Wrong Password"
+        })
+    }
+    catch (err) {
+        console.log(err);
+        response.send({
+            success: false,
+            message:err.message
+        })
+   }
+})
+
 // endpoint to get all Users
 // router.get("/api/users/users", async(_, response) => {
 //     try {
